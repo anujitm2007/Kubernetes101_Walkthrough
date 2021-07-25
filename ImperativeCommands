@@ -1,0 +1,54 @@
+1. List all the namespaces in the cluster
+kubectl get namespaces
+kubectl get ns
+
+2. List all the pods in all namespaces
+kubectl get po --all-namespaces
+
+3. List all the pods in the particular namespace
+kubectl get po -n <namespace name>
+
+4. List all the services in the particular namespace
+kubectl get svc -n <namespace name>
+
+5. Create an nginx pod in a default namespace and verify the pod running
+// creating a pod
+kubectl run nginx --image=nginx --restart=Never
+
+// List the pod
+kubectl get po
+
+6. Get the complete details of the pod you just created
+kubectl describe pod nginx
+
+7. Delete the pod you just created
+kubectl delete po nginx
+
+8. Delete the pod you just created without any delay (force delete)
+kubectl delete po nginx --grace-period=0 --force
+
+9. Create the nginx pod and execute the simple shell on the pod
+// creating a pod
+kubectl run nginx --image=nginx --restart=Never
+
+// exec into the pod
+kubectl exec -it nginx /bin/sh
+
+10. Create a busybox pod and run command ls while creating it and check the logs
+kubectl run busybox --image=busybox --restart=Never -- ls
+kubectl logs busybox
+
+11. If pod crashed check the previous logs of the pod
+kubectl logs busybox -p
+
+12. Create a deployment called demo1 with image nginx with 1 replica
+kubectl create deploy demo1 --image=nginx
+
+13. Scale the deployment from 1 replica to 5 replicas and verify
+kubectl scale deploy demo1 --replicas=20
+
+14. Delete the deployment you just created and watch all the pods are also being deleted
+kubectl delete deploy demo1
+
+15. create the service again with type NodePort
+kubectl expose po nginx --port=80 --type=NodePort
